@@ -17,12 +17,14 @@ $(document).ready(function(){
  // });
 
   currentUser = JSON.parse(localStorage.getItem("currentUser"));
+ if (currentUser!==undefined && currentUser!==null && currentUser.length!==0) {
  	loginName=currentUser.loginName;
  
  	if (currentUser.status === "loggedIn") {
 	displayAsLoggedIn();
 //	alert("welcome!");
-
+};
+};
 
 function Car (id,brand,model,year,transmition,price,stock, description) {
 	this.id=id;

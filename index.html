@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <script>
+    	
+var loginName;
+var currentUser;
+ 
+$(document).ready(function(){
+  //$("p").click(function(){
+  //  $(this).hide();
+ // });
+
+  currentUser = JSON.parse(localStorage.getItem("currentUser"));
+ 	loginName=currentUser.loginName;
+ 
+ 	if (currentUser.status === "loggedIn") {
+	displayAsLoggedIn();
+//	alert("welcome!");
+	}
+  
+function displayAsLoggedIn(){
+$("a.loginLink").html("log out");
+$("a.regLink").html("logged in as "+loginName+"");
+};     
+ 
+});
+
+    </script>
+    <style>
+.logo {width:200px;}   
+    </style>
+  </head>
+  <body>
+
+   <section>
+
+     <header>
+
+     	 <a href="index.html"><img src="images/logo.png" class="logo"/></a>
+
+     	 <h3><a href="index.html">Auto Barn</a></h3>
+
+     	 <p>...giving a new LEASE of life to your driving experience!</p>
+<div id="content">
+	
+	</div>
+     </header>
+
+         <nav>
+
+     	  <a href="choose.html">Choose Your Car</a> | 
+
+     	  <a href="login.html?method=login" class="loginLink">Login</a> | 
+
+     	  <a href="login.html?method=reg" class="regLink">Register</a> |   	  
+
+     	  <a href="browse.html">Browse Catalogue</a> | 
+
+     	  <a href="quote.html">Instant Quote</a>
+
+     </nav>
+
+     <main>
+
+     	 <h4>The Car of your Dreams - ready to rent now!</h4>
+
+       <p>We stock only the highest quality models in excelllent condition. We're sure you'll find your perfect match. You're only a few clicks away!</p>
+
+       <p><img src="/images/main.jpg"/></p>
+
+       <p><button>CHOOSE YOUR CAR</button></p>
+      </main>
+
+     <footer>
+
+     	 <p>&copy; 2015 Auto Barn Ltd | All rights reserved | Crafted with Love by Jonathan Kenton</p>
+
+     </footer>
+    </section>
+  </body>
+</html>

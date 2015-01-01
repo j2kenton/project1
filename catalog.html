@@ -8,6 +8,7 @@
 var loginName;
 var currentUser;
 var cars; 
+var carList;
 var content="";
 var carSelected=false;
 
@@ -36,7 +37,7 @@ function Car (id,brand,model,year,transmition,price,stock, description) {
 	this.description=description;
 			};
 
-var cars=[
+var carList=[
  new Car("1","Honda","Accord","2002","auto","500","1","A classy package, well put together and feels more special than the average family car. Superb engines and value for money."),
  new Car("2","Subaru","Forester","2005","manual","400","1","Not quite an off roader, much more than an estate with a sporty edge, making it the perfect combination. Great all round buy."),
  new Car("3","Mazda","MX-5","2004","auto","450","1","Blueprint for the modern roadster with sweet handling and engines to match. Extremely easy to live with."),
@@ -50,7 +51,7 @@ var cars=[
 ]
 //var car1= new Car("8431","Honda","Accord","2002","auto","500");
 
-	localStorage.setItem("cars", JSON.stringify(cars));	
+	localStorage.setItem("cars", JSON.stringify(carsList));	
 
 	}
   
@@ -61,7 +62,6 @@ $("a.regLink").html("logged in as "+loginName+"");
 };     
 
   cars = JSON.parse(localStorage.getItem("cars"));
-
 
  $.each(cars,function(index,value){
    //.each(value,function(){content})

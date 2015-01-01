@@ -26,6 +26,13 @@ $(document).ready(function(){
 //	alert("welcome!");
 };
 
+function displayAsLoggedIn(){
+
+$("a.loginLink").html("log out");
+$("a.regLink").html("logged in as "+loginName+"");
+};     
+};
+
 function Car (id,brand,model,year,transmition,price,stock, description) {
 	this.id=id;
 	this.brand=brand;
@@ -52,14 +59,6 @@ var carList=[
 //var car1= new Car("8431","Honda","Accord","2002","auto","500");
 
 	localStorage.setItem("cars", JSON.stringify(carsList));	
-
-	}
-  
-function displayAsLoggedIn(){
-
-$("a.loginLink").html("log out");
-$("a.regLink").html("logged in as "+loginName+"");
-};     
 
   cars = JSON.parse(localStorage.getItem("cars"));
 

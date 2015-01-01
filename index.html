@@ -11,7 +11,8 @@ var currentUser;
 $(document).ready(function(){
   //$("p").click(function(){
   //  $(this).hide();
- // });
+ 
+ if (currentUser!==null && currentUser.length!==0) {
 
   currentUser = JSON.parse(localStorage.getItem("currentUser"));
  	loginName=currentUser.loginName;
@@ -25,7 +26,7 @@ function displayAsLoggedIn(){
 $("a.loginLink").html("log out");
 $("a.regLink").html("logged in as "+loginName+"");
 };     
- 
+ };
 });
 
     </script>

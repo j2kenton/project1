@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!--   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+  <script src="jquery-1.11.1.min.js"></script>
+    <script>
+    	
+var loginName;
+var currentUser;
+var cars; 
+var content="";
+var carSelected=false;
+
+$(document).ready(function(){
+  //$("p").click(function(){
+  //  $(this).hide();
+ // });
+
+  currentUser = JSON.parse(localStorage.getItem("currentUser"));
+ 	loginName=currentUser.loginName;
+ 
+ 	if (currentUser.status === "loggedIn") {
+	displayAsLoggedIn();
+//	alert("welcome!");
+
+
+function Car (id,brand,model,year,transmition,price,stock, description) {
+	this.id=id;
+	this.brand=brand;
+	this.model=model;
+	this.year=year;
+	this.transmition=transmition;
+	this.price=price;
+	this.stock=stock;
+	this.description=description;
+			};
+
+var cars=[
+ new Car("1","Honda","Accord","2002","auto","500","1","A classy package, well put together and feels more special than the average family car. Superb engines and value for money."),
+ new Car("2","Subaru","Forester","2005","manual","400","1","Not quite an off roader, much more than an estate with a sporty edge, making it the perfect combination. Great all round buy."),
+ new Car("3","Mazda","MX-5","2004","auto","450","1","Blueprint for the modern roadster with sweet handling and engines to match. Extremely easy to live with."),
+ new Car("4","Mitsubishi","Carisma","2001","auto","550","1","Despite the name, not that interesting to look at or drive, but that's not the point. Here is a no-nonsense hatchback that won't let you down."),
+ new Car("5","Toyota","Yaris","2002","auto","600","1","Superminis don't come better. Bags of room and perky engines. Probably the best small car buy."),
+ new Car("6","Honda","Civic","2000","manual","575","1","Solid build quality and good engines are just part of the appeal, the Civic is one of the most spacious small cars around. Great value."),
+ new Car("7","Nissan","Almera","2012","auto","525","1","A dull package, but that's no reason to dismiss the Almera which is practical and perfect for the smaller family who need a big boot and utter reliability."),
+ new Car("8","Honda","CR-V","2010","manual","550","1","Proof that you don't need an XXXL 4x4. Here is a four-wheel drive estate that is flexible, easy to drive and own."),
+ new Car("9","Toyota","RAV4","2014","manual","475","1","So few four-wheel drives are fun to drive. This car is suitably sporty, but very practical. Expensive used buy but worth it."),
+ new Car("10","Nissan","Micra","2009","auto","550","1","The driving school favourite. Tough, fairly roomy, but with its light controls is easy to steer around town.") 
+]
+//var car1= new Car("8431","Honda","Accord","2002","auto","500");
+
+	localStorage.setItem("cars", JSON.stringify(cars));	
+
+	}
+  
+function displayAsLoggedIn(){
+$("a.loginLink").html("log out");
+$("a.regLink").html("logged in as "+loginName+"");
+};     
+
+  cars = JSON.parse(localStorage.getItem("cars"));
+
+//"8431","Honda","Accord","2002","auto","500","1"),
+//id,brand,model,year,transmition,price,stock
+//$('.carDetails').css('display','block')
+//id='"+value.id+'"
+
+/*
+
+ 	content+="<div style='display:block;' ><img src='images/"+value.id+".jpg' class='logo'/></div><div style='display:block;'><h4 class='carTitle'}'>"+value.brand+" "+value.model+"</h4><p class='carDetails'><br/>brand : "+value.brand+"<br/>model : "+value.model+"<br/>year : "+value.year+"<br/>transmition : "+value.transmition+"<br/>price : "+value.price+"<br/>stock : "+value.stock+"<,id : "+value.id</p></div>";
+ 	 //content+=key+" : "+val+"<br/>\n"; 
+*/
+
+ $.each(cars,function(index,value){
+   //.each(value,function(){content})
+ if (value.stock !== "0"){
+ 	content+="<div style='display:block;'><h4 class='carTitle' id='"+value.id+"'>"+value.brand+" "+value.model+"</h4><p class='carDetails'>- "+value.description+"<br/>- year: "+value.year+"<br/>- transmition: "+value.transmition+"<br/>- basic rental fee: "+value.price+"NIS<br/>- in stock: "+value.stock+"<br/>- id number: #"+value.id+"<br/><br/><button class='order'>order now!</button></p></div>";
+ 	 //content+=key+" : "+val+"<br/>\n"; 
+ };
+ });
+$("#content").html(content);
+$(".carDetails").css("display","none");
+
+
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var imageObj = new Image();
+var imgNmb=1;
+//var imgId;
+
+   
+   
+      function switchImage(imgId){
+        	    
+       // 	   imgId="img"+imgNmb; 	
+        context.clearRect(0, 0, canvas.width, canvas.height);
+   //     	  	context.drawImage(images.img2, 350, 55, 93, 104);
+        	imageObj.src = 'images/'+imgId+'.jpg';
+        	imageObj.onload = function() {
+        context.drawImage(imageObj, 69, 50);
+      };
+     
+        	   $(".carTitle").css("color","black");
+        	   $("#"+imgId).css("color","red");
+        	   //$(".carDetails").css("display","none");
+          	//$("#"+imgId).siblings(".carDetails").css('display','block');
+	          //carSelected=true;
+          	
+
+        	 
+        };
+      
+
+function toggleCarDetailsDisplay(target){
+	
+	if ($(target).siblings(".carDetails").css('display')=='none') {
+  $(".carDetails").css("display","none");
+	$(target).siblings(".carDetails").css('display','block');
+//	imgNmb=parseInt(target.getAttribute("id"));
+var imgCode=parseInt(target.getAttribute("id"));
+imgNmb=imgCode;
+//	switchImage(imgNmb);
+     // 	   imgId="img"+imgNmb; 	
+        context.clearRect(0, 0, canvas.width, canvas.height);
+   //     	  	context.drawImage(images.img2, 350, 55, 93, 104);
+        	imageObj.src = 'images/'+imgCode+'.jpg';
+   //     	imageObj.onload = function() {
+        context.drawImage(imageObj, 69, 50);
+     // };
+     
+        	   $(".carTitle").css("color","black");
+        	   $("#"+imgCode).css("color","red");
+        	  // $(".carDetails").css("display","none");
+          	//$("#"+imgNmb).siblings(".carDetails").css('display','block');
+
+
+	carSelected=true;
+	//switchImage(target);
+	}
+	else {
+		$(target).siblings(".carDetails").css('display','none');
+		carSelected=false;
+	}
+}; 
+
+
+//$(".carTitle").on("click",function(){toggleCarDetailsDisplay();});
+$(".carTitle").on("click",function(){toggleCarDetailsDisplay(this);});
+//$("body").on("click",function(){alert('hi');});
+//alert("content");
+ 
+
+$("#myCanvas").on("click",function(){
+        		if ($("#"+imgNmb).siblings(".carDetails").css('display')=='none') {
+  $(".carDetails").css("display","none");
+	$("#"+imgNmb).siblings(".carDetails").css('display','block');
+	carSelected=true;
+	}
+	else {
+		$(".carDetails").css('display','none');
+		carSelected=false;
+	}
+        	}); 
+        	
+        switchImage(imgNmb);
+        
+        setInterval(function(){
+        	if (carSelected==false){
+        	imgNmb++; if (imgNmb==11){imgNmb=1;}; switchImage(imgNmb);
+        	};
+        	},3000);
+        	
+        	$(".order").on("click",function(){window.location.href="order.html?id="+imgNmb;});
+    
+    /*
+      loadImages(sources, function(images) {
+        imgNmb=1;
+        context.drawImage(images.img1, 100, 30, 200, 137); 
+        
+        function switchImage(imgNmb){
+        //	    imgNmb++;
+       // 	   imgId="img"+imgNmb; 	
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        	  	context.drawImage(images.img2, 350, 55, 93, 104);
+        	  
+        	 
+        	 
+        	 
+        //	  if (img==4){img=1;};
+        	 
+        };
+        $("#myCanvas").on("click",function(){switchImage(imgNmb);});
+    
+      });
+
+*/
+ 
+
+
+});
+    </script>
+    <style>    	
+.logo {width:200px;}   
+    </style>
+  </head>
+  <body>
+
+   <section>
+
+     <header>
+
+     	 <a href="index.html"><img src="images/logo.png" class="logo" /></a>
+
+     	 <h3><a href="index.html">Auto Barn</a></h3>
+
+     	 <p>...giving a new LEASE of life to your driving experience!</p>
+
+     </header>
+
+         <nav>
+
+     	  <a href="choose.html">Choose Your Car</a> | 
+
+     	  <a href="login.html?method=login" class="loginLink">Login</a> | 
+
+     	  <a href="login.html?method=reg" class="regLink">Register</a> |   	  
+
+     	  <a href="browse.html">Browse Catalogue</a> | 
+
+     	  <a href="quote.html">Instant Quote</a>
+
+     </nav>
+
+     <main>
+
+     	 <h4>Pick a Car</h4>
+
+       <p>We stock only the highest quality models in excelllent condition. We're sure you'll find your perfect match. You're only a few clicks away!</p>
+
+    <canvas id="myCanvas" width="578" height="400"></canvas>
+  
+       <div id="content"></div>
+
+      </main>
+
+     <footer>
+
+     	 <p>&copy; 2015 Auto Barn Ltd | All rights reserved | Crafted with Love by Jonathan Kenton</p>
+
+     </footer>
+    </section>
+  </body>
+</html>

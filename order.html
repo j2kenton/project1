@@ -1,0 +1,147 @@
+<DOCTYPE html>
+<html>
+  <head>
+  	 <style>
+  	   #login {}	
+  	   #reg {}	
+  	 </style>
+<!--   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+  <script src="jquery-1.11.1.min.js"></script>
+    <script>
+    	    	
+  var pw;
+  var loginName;
+  var carSelected;
+$(document).ready(function(){
+
+var cars = JSON.parse(localStorage.getItem("cars"));
+var methodParameter = (location.search.match(/[\?\&]id=[^&]+/)+"").slice(4);
+ carSelected = cars[methodParameter-1];
+//alert(methodParameter);
+// alert(carSelected.transmition);
+
+var orderInfo="<h4>Your Selection:</h4>"+carSelected.brand+" "+carSelected.model+"</h4><p class='carDetails'>- year: "+carSelected.year+"<br/>- transmition: "+carSelected.transmition+"<br/>- basic rental fee: "+carSelected.price+"NIS<br/>- in stock: "+carSelected.stock+"<br/>- id number: #"+carSelected.id;
+
+///////////// 
+
+
+var worker = new Worker('http://jjk613.github.io/project1/js/worker-calc.js');
+
+worker.addEventListenter('message',function(e){
+	alert('worker said: ',e.data);
+},false);
+
+worker.postmessage('hi'); //sends data to worker
+
+/*
+    	var w;
+
+function startWorker() {
+    if(typeof(Worker) !== "undefined") {
+        if(typeof(w) == "undefined") {
+            w = new Worker("js/calc.js");
+            w.addEventListener('message',function(e))
+        }
+        w.onmessage = function(event) {
+            alert(event.data);
+        };
+    } else {
+        alert("Sorry, your browser does not support Web Workers...");
+    }
+}
+
+function stopWorker() { 
+    w.terminate();
+    w = undefined;
+}
+ */   	
+    	//////////////
+
+$(".carSelected").html(orderInfo);
+$(".submitLocations").on("click",function(){calculateFee(); return false;})
+///////   $("#quote").html("<p><h4>Total Rental Fee: </h4>"+parseInt(fee)+" NIS</p>");
+
+});
+    </script>
+    <style>
+.logo {width:200px;}    	
+    </style>
+  </head>
+  <body>
+
+   <section>
+
+     <header>
+
+     	 <a href="index.html"><img src="images/logo.png" class="logo"/></a>
+
+     	 <h3><a href="index.html">Auto Barn</a></h3>
+
+     	 <p>...giving a new LEASE of life to your driving experience!</p>
+
+     </header>
+
+     <nav>
+
+     	  <a href="choose.html">Choose Your Car</a> | 
+
+     	  <a href="login.html?login=true" class="loginLink">Login</a> | 
+
+     	  <a href="login.html?login=false" class="regLink">Register</a> |   	  
+
+     	  <a href="browse.html">Browse Catalogue</a> | 
+
+     	  <a href="quote.html">Instant Quote</a>
+
+     </nav>
+
+     <main>
+       
+      <div id="orderContent">
+
+     	 <h4>ORDER</h4>
+     	 <p class='carSelected'></p>
+       <form action="" method="POST" name="order" onsubmit="" >
+       	<fieldset>	
+       	 <legend>select requirements:</legend><br/>
+       	 <span>Starting Point:</span>
+       	 <select required autofocus name="start">
+     	 	  <option disabled selected>select...</option> 
+       	 	  <option value="jerusalem">Jerusalem District</option>
+       	 	  <option value="center">Tel Aviv / Center</option>
+       	 	  <option value="north">Northern District</option>
+       	 	  <option value="south">Southern District</option>
+       	 	  <option value="judea">Judea & Samaria Area</option>
+       	 	</select>
+        <br/><br/>
+       	 <span>Destination:</span>
+        <select required name="end">
+       	 	  <option disabled selected>select...</option>
+       	 	  <option value="jerusalem">Jerusalem District</option>
+       	 	  <option value="center">Tel Aviv / Centre</option>
+       	 	  <option value="north">Northern District</option>
+       	 	  <option value="south">Southern District</option>
+       	 	  <option value="judea">Judea & Samaria Area</option>
+       	 	</select>
+        <br/><br/>
+          <input type="submit" class="submitLocations"/>
+          <input type="reset" /><br/><br/><br/>
+          
+          </fieldset>
+       </form>
+       
+       </div>
+       
+       <div id="quote">
+       	</div>
+       
+      </main>
+
+       <footer>
+
+     	 <p>&copy; 2015 Auto Barn Limited | All rights reserved | Design/Development by Jonathan Kenton</p>
+
+     </footer>
+    </section>
+  </body>
+</html>

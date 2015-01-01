@@ -25,7 +25,8 @@ var orderInfo="<h4>Your Selection:</h4>"+carSelected.brand+" "+carSelected.model
 ///////////// 
 
 
-var worker = new Worker('http://jjk613.github.io/project1/js/worker-calc.js');
+//var worker = new Worker('http://jjk613.github.io/project1/js/worker-calc.js');
+var worker = new Worker('js/worker-calc.js');
 
 worker.addEventListenter('message',function(e){
 	alert('worker said: ',e.data);

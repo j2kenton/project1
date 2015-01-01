@@ -3,8 +3,7 @@
   <head>
 <!--   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
   <script src="jquery-1.11.1.min.js"></script>
-    <script>
-    	
+    <script>    	
 var loginName;
 var currentUser;
 var cars; 
@@ -55,51 +54,37 @@ var carList=[
  new Car("8","Honda","CR-V","2010","manual","550","1","Proof that you don't need an XXXL 4x4. Here is a four-wheel drive estate that is flexible, easy to drive and own."),
  new Car("9","Toyota","RAV4","2014","manual","475","1","So few four-wheel drives are fun to drive. This car is suitably sporty, but very practical. Expensive used buy but worth it."),
  new Car("10","Nissan","Micra","2009","auto","550","1","The driving school favourite. Tough, fairly roomy, but with its light controls is easy to steer around town.") 
-]
-//var car1= new Car("8431","Honda","Accord","2002","auto","500");
+];
 
-	localStorage.setItem("cars", JSON.stringify(carsList));	
+	localStorage.setItem("cars", JSON.stringify(carList));	
 
   cars = JSON.parse(localStorage.getItem("cars"));
+//note: carList!==cars
 
  $.each(cars,function(index,value){
-   //.each(value,function(){content})
  if (value.stock !== "0"){
  	content+="<div style='display:block;'><h4 class='carTitle' id='"+value.id+"'>"+value.brand+" "+value.model+"</h4><p class='carDetails'>- "+value.description+"<br/>- year: "+value.year+"<br/>- transmition: "+value.transmition+"<br/>- basic rental fee: "+value.price+"NIS<br/>- in stock: "+value.stock+"<br/>- id number: #"+value.id+"<br/><br/><button class='order'>order now!</button></p></div>";
- 	 //content+=key+" : "+val+"<br/>\n"; 
  };
  });
  
 $("#content").html(content);
 $(".carDetails").css("display","none");
 
-
       var canvas = document.getElementById('myCanvas');
       var context = canvas.getContext('2d');
       var imageObj = new Image();
 var imgNmb=1;
-//var imgId;
 
-   
-   
-      function switchImage(imgId){
-        	    
-       // 	   imgId="img"+imgNmb; 	
+           function switchImage(imgId){
+        	     	
         context.clearRect(0, 0, canvas.width, canvas.height);
-   //     	  	context.drawImage(images.img2, 350, 55, 93, 104);
         	imageObj.src = 'images/'+imgId+'.jpg';
         	imageObj.onload = function() {
         context.drawImage(imageObj, 69, 50);
       };
      
         	   $(".carTitle").css("color","black");
-        	   $("#"+imgId).css("color","red");
-        	   //$(".carDetails").css("display","none");
-          	//$("#"+imgId).siblings(".carDetails").css('display','block');
-	          //carSelected=true;
-          	
-
-        	 
+        	   $("#"+imgId).css("color","red");        	 
         };
       
 
@@ -186,7 +171,7 @@ $("#myCanvas").on("click",function(){
       });
 
 */
- 
+  
 
 
 });

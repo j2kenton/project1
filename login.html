@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	 <style>
+  	   #login {}	
+  	   #reg {}	
+  	 </style>
+<!--   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+  <script src="jquery-1.11.1.min.js"></script>
+    <script>
+  var pw;
+  var loginName; 
+$(document).ready(function(){
+	
+// var loginName;
+// var pw; 
+// var data = 
+// var details=;
+ 
+  	if (localStorage.getItem("tempData") == null || localStorage.getItem("tempData").length == 0) {
+	localStorage.setItem("tempData", ""); 	
+	} else {
+		fillForm(JSON.parse(localStorage.getItem("tempData")));	
+	}
+	
+	if (localStorage.getItem("tempDetails") == null || localStorage.getItem("tempDetails").length == 0) {
+	localStorage.setItem("tempDetails", ""); 	
+	} else {
+		fillDetails(JSON.parse(localStorage.getItem("tempDetails")));	
+		loginName= JSON.parse(localStorage.getItem("tempDetails")).loginName;
+		pw= JSON.parse(localStorage.getItem("tempDetails")).pw;
+		
+	}
+	
+function Data (fName, lName, tel, cell, email, dob, lNumber, username, password) {
+	this.fName = fName;
+	this.lName = lName;
+	this.tel = tel;
+	this.cell = cell;
+	this.email = email ;
+	this.dob = dob ;
+	this.lNumber = lNumber ;
+	this.username = username ;
+	this.password = password ;
+};
+
+function Details (loginName,pw) {
+	this.loginName = loginName;
+	this.pw = pw;
+	};
+	
+	function Login (status,loginName){
+		this.status=status;
+		this.loginName=loginName;
+	}
+
+function fillForm(data) {
+  $("input[name=fName]").val(data.fName);  
+  $("input[name=lName]").val(data.lName);  
+  $("input[name=tel]").val(data.tel);  
+  $("input[name=cell]").val(data.cell);  
+  $("input[name=email]").val(data.email);  
+  $("input[name=dob]").val(data.dob);  
+  $("input[name=lNumber]").val(data.lNumber);  
+  $("input[name=username]").val(data.username);  
+  $("input[name=password]").val(data.password);  
+	}
+	
+	function fillDetails(details) {
+  $("input[name=loginName]").val(details.loginName);  
+  $("input[name=pw]").val(details.pw); 
+	}
+
+function storeTempData(){
+	var fName = $("input[name=fName]").val();
+	var lName = $("input[name=lName]").val();  
+  var tel = $("input[name=tel]").val();  
+  var cell = $("input[name=cell]").val();  
+  var email = $("input[name=email]").val();  
+  var dob = $("input[name=dob]").val();  
+  var lNumber = $("input[name=lNumber]").val();  
+  var username = $("input[name=username]").val();  
+  var password = $("input[name=password]").val();  
+  
+	localStorage.setItem("tempData", JSON.stringify(new Data(fName, lName, tel, cell, email, dob, lNumber, username, password)));
+  }
+ 
+function storeTempDetails(){
+	 loginName = $("input[name=loginName]").val();
+	 pw = $("input[name=pw]").val(); 
+  
+	localStorage.setItem("tempDetails", JSON.stringify(new Details(loginName,pw)));
+  }
+
+  var to;
+  function dataEntry(){
+  	if (to !== undefined) {
+		clearTimeout(to);
+	  }
+	  to = setTimeout(storeTempData, 100);
+    }
+  
+  var to2;
+  function detailsEntry(){
+  	if (to2 !== undefined) {
+		clearTimeout(to2);
+	  }
+	  to2 = setTimeout(storeTempDetails, 100);
+    }
+
+  function resetTempData() {
+	  localStorage.setItem("tempData", ""); 	
+//	alert("your data has been cleared sucessfully")
+}
+
+function resetTempDetails() {
+	  localStorage.setItem("tempDetails", ""); 	
+//	alert("your data has been cleared sucessfully")
+}
+
+  function submitData(){
+ //  var username = JSON.parse(localStorage.getItem("tempData")).username;  
+  	localStorage.setItem(JSON.parse(localStorage.getItem("tempData")).username, localStorage.getItem("tempData"));
+  	 
+ 	localStorage.setItem("currentUser",JSON.stringify(new Login("loggedIn",JSON.parse(localStorage.getItem("tempData")).username)));
+    window.location.href="index.html";
+    return false;
+   // resetTempDetails();
+//  }
+  
+  	
+//  	resetTempData();
+  }
+
+  function submitDetails(){
+   
+   var details = JSON.parse(localStorage.getItem(loginName));
+//  alert(loginName);
+ // alert(pw);
+  if (details.password==pw) {
+  //  alert("you're in!");
+ //   $("a.loginLink").html("logged in as "+loginName+"");
+   // $("a.regLink").html("log out");
+ // BETTER??   $("a.loginLink").html("log out");
+ //   return false;
+ 	localStorage.setItem("currentUser",JSON.stringify(new Login("loggedIn",loginName)));
+    window.location.href="index.html";
+   // resetTempDetails();
+  }
+  
+  }
+
+
+  function displayLogin() {
+  	 resetTempData();
+    $("#login").css("display","block");
+    $("#reg").css("display","none");
+}
+
+  function displayReg() {
+    $("#reg").css("display","block");
+    $("#login").css("display","none");
+}
+
+var methodParameter = (location.search.match(/[\?\&]method=[^&]+/)+"").slice(8).replace(/\%20/g," ");
+ if (methodParameter === "login") {
+   displayLogin();  
+ } 
+ else {
+ 	 displayReg();
+ }
+
+$(".toLogin").on("click",function(){displayLogin();});
+$(".toReg").on("click",function(){displayReg();});
+$("form[name='reg'] input[type='submit']").on("click",function(){submitData();});
+//$("form[name='login'] input[type='submit']").on("click",function(){submitDetails();});
+$("#submitLoginDetails").on("click",function(){submitDetails();});
+    //$("a.regLink").html("log out")});
+
+$("form[name='reg'] input[type='reset']").on("click",function(){resetTempData();});
+$("form[name='reg'] input").on("keyup",function(){dataEntry();});
+$("form[name='login'] input").on("keyup",function(){detailsEntry();});
+  
+// adapted from Tadeck on stackoverflow.com
+var d = new Date();
+var month = d.getMonth()+1;
+var day = d.getDate();
+var year = d.getFullYear()-14; //min. driving age in usa/canada in some states is 14!! -jk
+var output = year+'-'+
+((''+month).length<2 ? '0' : '')+month+'-'+
+((''+day).length<2 ? '0' : '')+day;
+//alert(output);
+$("input[name='dob']").attr("max",output);
+
+});
+
+//alert("hi");
+ function validateForm() {
+     var password = document.forms["reg"]["password"].value;
+     var testLowerCase = /[a-z]/.test( password );
+     var testUpperCase = /[A-Z]/.test( password );
+     var testDigits = /[0-9]/.test( password );
+
+     var tels = document.forms["reg"]["tel"].value + document.forms["reg"]["cell"].value;
+     if (tels.trim() === "") {alert("please include at least 1 telephone number"); return false;}
+
+     else if (!testLowerCase||!testUpperCase||!testDigits) {   
+       alert("please include at least 1 upper case, 1 lower case and 1 number");
+         return false;
+     }
+    else {
+         alert("all good!");
+     //    storeData();
+    //     localStorage.setItem("tempData", "[]");
+    //     return true;
+         }
+         
+ }
+
+    </script>
+    <style>
+.logo {width:200px;}    	
+    </style>
+  </head>
+  <body>
+
+   <section>
+
+     <header>
+
+     	 <a href="index.html"><img src="images/logo.png" class="logo"/></a>
+
+     	 <h3><a href="index.html">Auto Barn</a></h3>
+
+     	 <p>...giving a new LEASE of life to your driving experience!</p>
+
+     </header>
+
+     <nav>
+
+     	  <a href="choose.html">Choose Your Car</a> | 
+
+     	  <a href="login.html?login=true" class="loginLink">Login</a> | 
+
+     	  <a href="login.html?login=false" class="regLink">Register</a> |   	  
+
+     	  <a href="browse.html">Browse Catalogue</a> | 
+
+     	  <a href="quote.html">Instant Quote</a>
+
+     </nav>
+
+     <main>
+
+     	 <div id="login">
+
+     	 <h4>LOGIN</h4>
+
+         <form method="POST" name="login">
+       	<fieldset>
+       	  <legend>enter your details:</legend><br/>
+          <input type="text" required size="20" placeholder="username or email" name="loginName" /><br/>
+          <input type="password" size="20" placeholder="password" name="pw" /><br/>
+         <!-- <input type="submit"/><br/> -->
+       </fieldset>
+       </form>
+         	<button id="submitLoginDetails">submit</button>
+         <span class="toReg">Not yet signed up? Register now!</span>
+       
+
+       </div>
+       
+      <div id="reg">
+
+     	 <h4>REGISTER</h4>
+       <form action="" method="POST" name="reg" onsubmit="return validateForm();" >
+       	<fieldset>	
+       	 <legend>enter your details:</legend><br/>
+           <input type="text" required size="20" placeholder="First Name" name="fName" />
+           <br/>
+           <input type="text" required size="20" placeholder="Last Name" name="lName" /><br/>
+           <input type="tel" pattern="0[0-9]{8,15}" required size="20" placeholder="Phone (digits 0-9 only)" name="tel"  /><br/>
+           <input type="tel" pattern="0[0-9]{9}" size="20" placeholder="Cellphone (9 digits, 0-9 only)" name="cell"  /><br/>
+           <input type="email" pattern="[a-zA-Z0-9\!\#\$\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]{1,64}(\.[a-zA-Z0-9\!\#\$\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+)*\@[a-zA-Z0-9\!\#\$\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]{1,250}\.[a-zA-Z0-9\!\#\$\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~\.]{2,253}(\.[a-zA-Z0-9\!\#\$\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]+)*" required size="20" placeholder="Email" name="email"   /><br/>  
+           <input type="date" pattern="" required size="20" min="1900-01-01" max="" placeholder="Date of Birth" name="dob"   /><br/>
+           <input type="text" minlength="6" maxlength="50" required size="20" placeholder="License Number" name="lNumber"   /><br/><br/>
+           <input type="" pattern="[a-zA-Z0-9]{3,12}" required size="20" placeholder="choose a username" name="username"   /><br/>
+           <span>(alphanumeric characters only. length: from 3 to 12 characters)
+           </span><br/><br/>
+           <input type="password" pattern="[a-zA-Z0-9]{8,16}" required size="20" placeholder="chooose a password" name="password" /><br/>
+           <span>(alphanumeric characters only, 8-16 characters. including at least: 1 lowercase, 1 uppercase, and 1 number)
+           </span><br/><br/>
+          <input type="submit" />
+          <input type="reset" /><br/><br/><br/>
+          
+          </fieldset>
+       </form>
+         <span class="toLogin">Already signed up? Log in now!</span>
+       
+       </div>
+       
+      </main>
+
+       <footer>
+
+     	 <p>&copy; 2015 Auto Barn Limited | All rights reserved | Design/Development by Jonathan Kenton</p>
+
+     </footer>
+    </section>
+  </body>
+</html>

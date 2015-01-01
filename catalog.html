@@ -24,7 +24,6 @@ $(document).ready(function(){
 	displayAsLoggedIn();
 //	alert("welcome!");
 };
-};
 
 function Car (id,brand,model,year,transmition,price,stock, description) {
 	this.id=id;
@@ -56,22 +55,13 @@ var cars=[
 	}
   
 function displayAsLoggedIn(){
+
 $("a.loginLink").html("log out");
 $("a.regLink").html("logged in as "+loginName+"");
 };     
 
   cars = JSON.parse(localStorage.getItem("cars"));
 
-//"8431","Honda","Accord","2002","auto","500","1"),
-//id,brand,model,year,transmition,price,stock
-//$('.carDetails').css('display','block')
-//id='"+value.id+'"
-
-/*
-
- 	content+="<div style='display:block;' ><img src='images/"+value.id+".jpg' class='logo'/></div><div style='display:block;'><h4 class='carTitle'}'>"+value.brand+" "+value.model+"</h4><p class='carDetails'><br/>brand : "+value.brand+"<br/>model : "+value.model+"<br/>year : "+value.year+"<br/>transmition : "+value.transmition+"<br/>price : "+value.price+"<br/>stock : "+value.stock+"<,id : "+value.id</p></div>";
- 	 //content+=key+" : "+val+"<br/>\n"; 
-*/
 
  $.each(cars,function(index,value){
    //.each(value,function(){content})
@@ -80,6 +70,7 @@ $("a.regLink").html("logged in as "+loginName+"");
  	 //content+=key+" : "+val+"<br/>\n"; 
  };
  });
+ 
 $("#content").html(content);
 $(".carDetails").css("display","none");
 

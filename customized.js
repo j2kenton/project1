@@ -1,4 +1,3 @@
-<script type="text/javascript">
 window.onload = function () {
 alert("onloading...");
 // for start course page
@@ -40,4 +39,4 @@ courseButtonForNotLoggedIn.innerHTML+=" / ";
 courseButtonForNotLoggedIn.appendChild(newLoginAnchor);  
 }
 }
-</script>
+
